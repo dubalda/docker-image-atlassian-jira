@@ -8,29 +8,21 @@
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Jira Software | 7.4.0 | 7.4.0, latest, latest.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
-| Jira Service Desk | 3.5.1 | servicedesk, servicedesk.3.5.1, servicedesk.de, servicedesk.3.5.1.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
-| Jira Core | 7.4.0 | core, core.7.3.8, core.de, core.7.3.8.de | [Dockerfile](https://github.com/blacklabelops/jira/blob/master/Dockerfile) |
+| Jira Software | 7.4.0 | 7.4.0, latest, latest.de | [Dockerfile](https://github.com/EugenMayer/jira/blob/master/Dockerfile) |
+| Jira Service Desk | 3.5.1 | servicedesk, servicedesk.3.5.1, servicedesk.de, servicedesk.3.5.1.de | [Dockerfile](https://github.com/EugenMayer/jira/blob/master/Dockerfile) |
+| Jira Core | 7.4.0 | core, core.7.3.8, core.de, core.7.3.8.de | [Dockerfile](https://github.com/EugenMayer/jira/blob/master/Dockerfile) |
 
 > Older tags remain but are not supported/rebuild.
 
 > `.de` postfix means images are installed with preset language german locale.
 
-## Related Images
-
-You may also like:
-
-* [blacklabelops/jira](https://github.com/blacklabelops/jira): The #1 software development tool used by agile teams
-* [blacklabelops/confluence](https://github.com/blacklabelops/confluence): Create, organize, and discuss work with your team
-* [blacklabelops/bitbucket](https://github.com/blacklabelops/bitbucket): Code, Manage, Collaborate
-* [blacklabelops/crowd](https://github.com/blacklabelops/crowd): Identity management for web apps
 
 # Make It Short
 
 Docker-Compose:
 
 ~~~~
-$ curl -O https://raw.githubusercontent.com/blacklabelops/jira/master/docker-compose.yml
+$ curl -O https://raw.githubusercontent.com/EugenMayer/jira/master/docker-compose.yml
 $ docker-compose up -d
 ~~~~
 
@@ -77,7 +69,7 @@ $ docker run -d --name jira \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  -p 80:8080 blacklabelops/jira
+	  -p 80:8080 EugenMayer/jira
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
@@ -124,7 +116,7 @@ $ docker run -d --name jira \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish" \
-	  -p 80:8080 blacklabelops/jira
+	  -p 80:8080 EugenMayer/jira
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
@@ -179,7 +171,7 @@ $ docker run -d --name jira \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jiradb@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish" \
-	  -p 80:8080 blacklabelops/jira
+	  -p 80:8080 EugenMayer/jira
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
@@ -225,7 +217,7 @@ $ docker run -d --name jira \
     -e "JIRA_DATABASE_URL=mysql://jiradb@mysql/jiradb" \
     -e "JIRA_DB_PASSWORD=jellyfish"  \
     -p 80:8080 \
-    blacklabelops/jira
+    EugenMayer/jira
 ~~~~
 
 >  Start the Jira and link it to the mysql instance.
@@ -255,7 +247,7 @@ $ docker run --name jira \
     -e "DOCKER_WAIT_PORT=5432" \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  -p 80:8080 blacklabelops/jira
+	  -p 80:8080 EugenMayer/jira
 ~~~~
 
 > Waits at most 60 seconds for the database.
@@ -297,7 +289,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=myhost.example.com" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
-    blacklabelops/jira
+    EugenMayer/jira
 ~~~~
 
 > Will set the values inside the server.xml in /opt/jira/conf/server.xml
@@ -316,7 +308,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=80" \
     -e "JIRA_PROXY_SCHEME=http" \
-    blacklabelops/jira
+    EugenMayer/jira
 ~~~~
 
 > Example with dockertools
@@ -351,7 +343,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
-    blacklabelops/jira
+    EugenMayer/jira
 ~~~~
 
 > Example with dockertools
@@ -384,7 +376,7 @@ Example:
 $ docker run -d -p 80:8080 --name jira \
     -v jiravolume:/var/atlassian/jira \
     -e "CATALINA_OPTS= -Xms384m -Xmx1g" \
-    blacklabelops/jira
+    EugenMayer/jira
 ~~~~
 
 > CATALINA_OPTS sets webserver startup properties.
@@ -398,7 +390,7 @@ $ docker run -d -p 80:8080 --name jira \
     -v jiravolume:/var/atlassian/jira \
     -e "JVM_MINIMUM_MEMORY=384m" \
     -e "JVM_MAXIMUM_MEMORY=1g" \
-    blacklabelops/jira
+    EugenMayer/jira
 ~~~~
 
 > Note: Atlassian default is minimum 384m and maximum 768m. You should never go lower.
@@ -418,7 +410,7 @@ $ docker run -d --name jira \
     -p 80:8080 \
     -v jiravolume:/var/atlassian/jira \
     -v $(pwd)/server.xml:/opt/jira/conf/server.xml \
-    blacklabelops/jira
+    EugenMayer/jira
 ~~~~
 
 > Note: `server.xml` is located in the directory where the command is executed.
@@ -429,9 +421,9 @@ Leave a message and ask questions on Hipchat: [blacklabelops/support](https://ww
 
 # Credits
 
-This project is very grateful for code and examples from the repository:
+This repo and project is based on the great work of
 
-[atlassianlabs/atlassian-docker](https://bitbucket.org/atlassianlabs/atlassian-docker)
+[blacklabelops/jira](https://bitbucket.org/blacklabelops/jira)
 
 # References
 
