@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM alpine:3.6
 
 ARG JIRA_VERSION=7.3.8
 ARG JIRA_PRODUCT=jira-software
@@ -17,7 +17,7 @@ ENV JIRA_USER=jira                            \
     JIRA_SCRIPTS=/usr/local/share/atlassian   \
     MYSQL_DRIVER_VERSION=5.1.38               \
     DOCKERIZE_VERSION=v0.4.0                  \
-    POSTGRESQL_DRIVER_VERSION=9.4.121	      \
+    POSTGRESQL_DRIVER_VERSION=9.4.1212	      \
     JAVA_HOME=$JIRA_INSTALL/jre		      \
     PATH=$PATH:$JAVA_HOME/bin                 \
     LANG=${LANG_LANGUAGE}_${LANG_COUNTRY}.UTF-8
