@@ -1,6 +1,6 @@
 # Dockerized Atlassian Jira
 
-[![Docker Stars](https://img.shields.io/docker/stars/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/blacklabelops/jira.svg)](https://hub.docker.com/r/blacklabelops/jira/)
+[![Docker Stars](https://img.shields.io/docker/stars/EugenMayer/jira.svg)](https://hub.docker.com/r/EugenMayer/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/EugenMayer/jira.svg)](https://hub.docker.com/r/EugenMayer/jira/)
 
 "The best software teams ship early and often - Not many tools, one tool. JIRA Software is built for every member of your software team to plan, track, and release great software." - [[Source](https://www.atlassian.com/software/jira)]
 
@@ -31,7 +31,7 @@ $ docker-compose up -d
 Docker-CLI:
 
 ~~~~
-$ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira blacklabelops/jira
+$ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira EugenMayer/jira
 ~~~~
 
 > Jira will be available at http://yourdockerhost. Data will be persisted inside docker volume `jiravolume`.
