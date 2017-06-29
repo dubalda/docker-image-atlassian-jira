@@ -1,6 +1,6 @@
 # Dockerized Atlassian Jira
 
-[![Docker Stars](https://img.shields.io/docker/stars/EugenMayer/jira.svg)](https://hub.docker.com/r/EugenMayer/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/EugenMayer/jira.svg)](https://hub.docker.com/r/EugenMayer/jira/)
+[![Docker Stars](https://img.shields.io/docker/stars/eugenmayer/jira.svg)](https://hub.docker.com/r/EugenMayer/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/EugenMayer/jira.svg)](https://hub.docker.com/r/EugenMayer/jira/)
 
 "The best software teams ship early and often - Not many tools, one tool. JIRA Software is built for every member of your software team to plan, track, and release great software." - [[Source](https://www.atlassian.com/software/jira)]
 
@@ -8,9 +8,9 @@
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Jira Software | 7.4.0 | 7.4.0, latest, latest.de | [Dockerfile](https://github.com/EugenMayer/jira/blob/master/Dockerfile) |
-| Jira Service Desk | 3.5.1 | servicedesk, servicedesk.3.5.1, servicedesk.de, servicedesk.3.5.1.de | [Dockerfile](https://github.com/EugenMayer/jira/blob/master/Dockerfile) |
-| Jira Core | 7.4.0 | core, core.7.3.8, core.de, core.7.3.8.de | [Dockerfile](https://github.com/EugenMayer/jira/blob/master/Dockerfile) |
+| Jira Software | 7.4.0 | 7.4.0, latest, latest.de | [Dockerfile](https://github.com/eugenmayer/jira/blob/master/Dockerfile) |
+| Jira Service Desk | 3.5.1 | servicedesk, servicedesk.3.5.1, servicedesk.de, servicedesk.3.5.1.de | [Dockerfile](https://github.com/eugenmayer/jira/blob/master/Dockerfile) |
+| Jira Core | 7.4.0 | core, core.7.3.8, core.de, core.7.3.8.de | [Dockerfile](https://github.com/eugenmayer/jira/blob/master/Dockerfile) |
 
 > Older tags remain but are not supported/rebuild.
 
@@ -22,7 +22,7 @@
 Docker-Compose:
 
 ~~~~
-$ curl -O https://raw.githubusercontent.com/EugenMayer/jira/master/docker-compose.yml
+$ curl -O https://raw.githubusercontent.com/eugenmayer/jira/master/docker-compose.yml
 $ docker-compose up -d
 ~~~~
 
@@ -31,7 +31,7 @@ $ docker-compose up -d
 Docker-CLI:
 
 ~~~~
-$ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira EugenMayer/jira
+$ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira eugenmayer/jira
 ~~~~
 
 > Jira will be available at http://yourdockerhost. Data will be persisted inside docker volume `jiravolume`.
@@ -69,7 +69,7 @@ $ docker run -d --name jira \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  -p 80:8080 EugenMayer/jira
+	  -p 80:8080 eugenmayer/jira
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
@@ -116,7 +116,7 @@ $ docker run -d --name jira \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish" \
-	  -p 80:8080 EugenMayer/jira
+	  -p 80:8080 eugenmayer/jira
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
@@ -171,7 +171,7 @@ $ docker run -d --name jira \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jiradb@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish" \
-	  -p 80:8080 EugenMayer/jira
+	  -p 80:8080 eugenmayer/jira
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
@@ -217,7 +217,7 @@ $ docker run -d --name jira \
     -e "JIRA_DATABASE_URL=mysql://jiradb@mysql/jiradb" \
     -e "JIRA_DB_PASSWORD=jellyfish"  \
     -p 80:8080 \
-    EugenMayer/jira
+    eugenmayer/jira
 ~~~~
 
 >  Start the Jira and link it to the mysql instance.
@@ -247,7 +247,7 @@ $ docker run --name jira \
     -e "DOCKER_WAIT_PORT=5432" \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
 	  -e "JIRA_DB_PASSWORD=jellyfish"  \
-	  -p 80:8080 EugenMayer/jira
+	  -p 80:8080 eugenmayer/jira
 ~~~~
 
 > Waits at most 60 seconds for the database.
@@ -289,7 +289,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=myhost.example.com" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
-    EugenMayer/jira
+    eugenmayer/jira
 ~~~~
 
 > Will set the values inside the server.xml in /opt/jira/conf/server.xml
@@ -308,7 +308,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=80" \
     -e "JIRA_PROXY_SCHEME=http" \
-    EugenMayer/jira
+    eugenmayer/jira
 ~~~~
 
 > Example with dockertools
@@ -343,7 +343,7 @@ $ docker run -d --name jira \
     -e "JIRA_PROXY_NAME=192.168.99.100" \
     -e "JIRA_PROXY_PORT=443" \
     -e "JIRA_PROXY_SCHEME=https" \
-    EugenMayer/jira
+    eugenmayer/jira
 ~~~~
 
 > Example with dockertools
@@ -376,7 +376,7 @@ Example:
 $ docker run -d -p 80:8080 --name jira \
     -v jiravolume:/var/atlassian/jira \
     -e "CATALINA_OPTS= -Xms384m -Xmx1g" \
-    EugenMayer/jira
+    eugenmayer/jira
 ~~~~
 
 > CATALINA_OPTS sets webserver startup properties.
@@ -390,7 +390,7 @@ $ docker run -d -p 80:8080 --name jira \
     -v jiravolume:/var/atlassian/jira \
     -e "JVM_MINIMUM_MEMORY=384m" \
     -e "JVM_MAXIMUM_MEMORY=1g" \
-    EugenMayer/jira
+    eugenmayer/jira
 ~~~~
 
 > Note: Atlassian default is minimum 384m and maximum 768m. You should never go lower.
@@ -410,14 +410,14 @@ $ docker run -d --name jira \
     -p 80:8080 \
     -v jiravolume:/var/atlassian/jira \
     -v $(pwd)/server.xml:/opt/jira/conf/server.xml \
-    EugenMayer/jira
+    eugenmayer/jira
 ~~~~
 
 > Note: `server.xml` is located in the directory where the command is executed.
 
-# Support & Feature Requests
+# Contributions
 
-Leave a message and ask questions on Hipchat: [blacklabelops/support](https://www.hipchat.com/gEorzhvnI)
+I am happy to take on pull requests and suggestion, but will try to keep the image as dry as possible. 
 
 # Credits
 

@@ -6,8 +6,8 @@ ARG JIRA_PRODUCT=jira-software
 ARG CONTAINER_UID=1000
 ARG CONTAINER_GID=1000
 # Language Settings
-ARG LANG_LANGUAGE=en
-ARG LANG_COUNTRY=US
+ARG LANG_LANGUAGE=de
+ARG LANG_COUNTRY=DE
 
 ENV JIRA_USER=jira                            \
     JIRA_GROUP=jira                           \

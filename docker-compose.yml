@@ -2,10 +2,10 @@ version: '2'
 
 services:
   jira:
-    image: blacklabelops/jira
+    image: eugenmayer/jira
+    build:
+      context: ./
     container_name: jirasoftware
-    networks:
-      - jiranet
     volumes:
       - jiradata:/var/atlassian/jira
     ports:
@@ -28,8 +28,6 @@ services:
   postgresql:
     image: blacklabelops/postgres
     hostname: postgresql
-    networks:
-      - jiranet
     volumes:
       - postgresqldata:/var/lib/postgresql/data
     environment:
@@ -49,7 +47,3 @@ volumes:
     external: false
   postgresqldata:
     external: false
-
-networks:
-  jiranet:
-    driver: bridge
