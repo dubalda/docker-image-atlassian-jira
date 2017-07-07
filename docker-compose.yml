@@ -2,7 +2,7 @@ version: '2'
 
 services:
   jira:
-    image: eugenmayer/jira
+    image: eugenmayer/jira:${JIRA_VERSION}
     build:
       context: ./
     container_name: jirasoftware
