@@ -1,6 +1,6 @@
 FROM alpine:3.6
 
-ARG JIRA_VERSION=7.0.11
+ARG JIRA_VERSION=7.1.10
 ARG JIRA_PRODUCT=jira-software
 # Permissions, set the linux user id and group id
 ARG CONTAINER_UID=1000
@@ -9,25 +9,28 @@ ARG CONTAINER_GID=1000
 ARG LANG_LANGUAGE=en
 ARG LANG_COUNTRY=US
 
-ENV JIRA_USER=jira                            \
-    JIRA_GROUP=jira                           \
-    JIRA_CONTEXT_PATH=ROOT                    \
-    JIRA_HOME=/var/atlassian/jira             \
-    JIRA_INSTALL=/opt/jira                    \
-    JIRA_SCRIPTS=/usr/local/share/atlassian   \
-    MYSQL_DRIVER_VERSION=5.1.38               \
-    DOCKERIZE_VERSION=v0.4.0                  \
-    POSTGRESQL_DRIVER_VERSION=9.4.1212	      \
-    JAVA_HOME=$JIRA_INSTALL/jre		      \
-    PATH=$PATH:$JAVA_HOME/bin                 \
-    LANG=${LANG_LANGUAGE}_${LANG_COUNTRY}.UTF-8
+ENV JIRA_USER=jira \
+    JIRA_GROUP=jira \
+    JIRA_CONTEXT_PATH=ROOT \
+    JIRA_HOME=/var/atlassian/jira \
+    JIRA_INSTALL=/opt/jira \
+    JIRA_SCRIPTS=/usr/local/share/atlassian \
+    MYSQL_DRIVER_VERSION=5.1.38 \
+    DOCKERIZE_VERSION=v0.5.0 \
+    POSTGRESQL_DRIVER_VERSION=9.4.1212
+
+# needs to be seperated since we need to use JIRA_INSTALL and it would not be popuplated if merged in one ENV
+ENV JAVA_HOME="$JIRA_INSTALL/jre"
+# splitted due to $JAVA_HOME
+ENV PATH=$PATH:$JAVA_HOME/bin \
+ LANG=${LANG_LANGUAGE}_${LANG_COUNTRY}.UTF-8
 
 COPY bin ${JIRA_SCRIPTS}
 
 RUN apk add --update                                    \
       ca-certificates                                   \
-      bash						\
-      su-exec						\
+      bash												\
+      su-exec											\
       gzip                                              \
       curl                                              \
       tini                                              \
@@ -74,9 +77,10 @@ RUN apk add --update                                    \
             -G $CONTAINER_GROUP                         \
             -h /home/$CONTAINER_USER                    \
             -s /bin/bash                                \
-            -S $CONTAINER_USER                      &&  \
-    # Adding letsencrypt-ca to truststore
-    export KEYSTORE=$JAVA_HOME/lib/security/cacerts && \
+            -S $CONTAINER_USER
+
+# Adding letsencrypt-ca to truststore # &&  \
+RUN export KEYSTORE=$JAVA_HOME/lib/security/cacerts && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx1.der && \
     wget -P /tmp/ https://letsencrypt.org/certs/letsencryptauthorityx2.der && \
     wget -P /tmp/ https://letsencrypt.org/certs/lets-encrypt-x1-cross-signed.der && \
