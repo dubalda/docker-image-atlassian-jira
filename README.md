@@ -8,13 +8,12 @@
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Jira Software | 7.4.0 | 7.4.0, latest, latest.de | [Dockerfile](https://github.com/eugenmayer/jira/blob/master/Dockerfile) |
-| Jira Service Desk | 3.5.1 | servicedesk, servicedesk.3.5.1, servicedesk.de, servicedesk.3.5.1.de | [Dockerfile](https://github.com/eugenmayer/jira/blob/master/Dockerfile) |
-| Jira Core | 7.4.0 | core, core.7.3.8, core.de, core.7.3.8.de | [Dockerfile](https://github.com/eugenmayer/jira/blob/master/Dockerfile) |
+| Jira Software - EN | [see tags](https://hub.docker.com/r/eugenmayer/jira/tags/) | en-$VERSION | [Dockerfile](https://github.com/eugenmayer/jira/blob/master/Dockerfile) |
+| Jira Software - DE | [see tags](https://hub.docker.com/r/eugenmayer/jira/tags/) | de-$VERSION | [Dockerfile](https://github.com/eugenmayer/jira/blob/master/Dockerfile_de) |
 
 > Older tags remain but are not supported/rebuild.
 
-> `.de` postfix means images are installed with preset language german locale.
+> `de-` prefix means images are installed with preset language german locale.
 
 
 # Make It Short
