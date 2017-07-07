@@ -1,5 +1,5 @@
 FROM alpine:3.6
-
+# new
 ARG JIRA_VERSION=7.0.11
 ARG JIRA_PRODUCT=jira-software
 # Permissions, set the linux user id and group id

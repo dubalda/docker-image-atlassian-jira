@@ -20,5 +20,5 @@ echo "tagging with $version"
 git tag $version
 git add Dockerfile
 git add Dockerfile_de
-git commit -m "releasing $version"
+git commit -am "releasing $version"
 git push && git push --tags
