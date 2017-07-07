@@ -18,9 +18,9 @@ sed -i '' "s/ARG LANG_LANGUAGE=.*/ARG LANG_LANGUAGE=de/g" Dockerfile_de
 sed -i '' "s/ARG LANG_COUNTRY=.*/ARG LANG_COUNTRY=DE/g" Dockerfile_de
 
 echo "tagging with $version"
-git tag $version
 git add .env
 git add Dockerfile
 git add Dockerfile_de
 git commit -am "releasing $version"
+git tag $version
 git push && git push --tags
