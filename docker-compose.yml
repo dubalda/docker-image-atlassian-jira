@@ -19,8 +19,7 @@ services:
       - 'JIRA_PROXY_SCHEME='
       - 'DOCKER_WAIT_HOST=postgresql'
       - 'DOCKER_WAIT_PORT=5432'
-    links:
-      - 'postgresql:postgresql'
+    links:dc
     labels:
       com.blacklabelops.description: "Atlassian Jira"
       com.blacklabelops.service: "jira"
