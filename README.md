@@ -21,8 +21,8 @@
 Docker-Compose:
 
 ~~~~
-$ curl -O https://raw.githubusercontent.com/eugenmayer/jira/master/docker-compose.yml
-$ docker-compose up -d
+curl -O https://raw.githubusercontent.com/eugenmayer/jira/master/docker-compose.yml
+docker-compose up -d
 ~~~~
 
 > Jira will be available at http://yourdockerhost
@@ -30,7 +30,7 @@ $ docker-compose up -d
 Docker-CLI:
 
 ~~~~
-$ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira eugenmayer/jira
+docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira eugenmayer/jira
 ~~~~
 
 > Jira will be available at http://yourdockerhost. Data will be persisted inside docker volume `jiravolume`.
@@ -45,8 +45,8 @@ First start the database server:
 > Note: Change Password!
 
 ~~~~
-$ docker network create jiranet
-$ docker run --name postgres -d \
+docker network create jiranet
+docker run --name postgres -d \
     --network jiranet \
     -v postgresvolume:/var/lib/postgresql \
     -e 'POSTGRES_USER=jira' \
@@ -63,7 +63,7 @@ $ docker run --name postgres -d \
 Then start Jira:
 
 ~~~~
-$ docker run -d --name jira \
+docker run -d --name jira \
     --network jiranet \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
@@ -72,6 +72,32 @@ $ docker run -d --name jira \
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
+
+# Proxy Configuration
+
+You can specify your proxy host and proxy port with the environment variables JIRA_PROXY_NAME and JIRA_PROXY_PORT. The value will be set inside the Atlassian server.xml at startup!
+
+When you use https then you also have to include the environment variable JIRA_PROXY_SCHEME.
+
+Example HTTPS:
+
+* Proxy Name: myhost.example.com
+* Proxy Port: 443
+* Poxy Protocol Scheme: https
+
+Just type:
+
+~~~~
+docker run -d --name jira \
+    -v jiravolume:/var/atlassian/jira \
+    -e "JIRA_PROXY_NAME=myhost.example.com" \
+    -e "JIRA_PROXY_PORT=443" \
+    -e "JIRA_PROXY_SCHEME=https" \
+    eugenmayer/jira
+~~~~
+
+> Will set the values inside the server.xml in /opt/jira/conf/server.xml
+Build image with the curent Confluence release:
 
 # Database Setup for Official Database Images
 
@@ -86,8 +112,8 @@ First start the database server:
 > Note: Change Password!
 
 ~~~~
-$ docker network create jiranet
-$ docker run --name postgres -d \
+docker network create jiranet
+docker run --name postgres -d \
     --network jiranet \
     -e 'POSTGRES_USER=jira' \
     -e 'POSTGRES_PASSWORD=jellyfish' \
@@ -99,7 +125,7 @@ $ docker run --name postgres -d \
 Then create the database with the correct collate:
 
 ~~~~
-$ docker run -it --rm \
+docker run -it --rm \
     --network jiranet \
     postgres:9.4 \
     sh -c 'exec createdb -E UNICODE -l C -T template0 jiradb -h postgres -p 5432 -U jira'
@@ -110,7 +136,7 @@ $ docker run -it --rm \
 Then start Jira:
 
 ~~~~
-$ docker run -d --name jira \
+docker run -d --name jira \
     --network jiranet \
     -v jiravolume:/var/atlassian/jira \
 	  -e "JIRA_DATABASE_URL=postgresql://jira@postgres/jiradb" \
@@ -119,107 +145,6 @@ $ docker run -d --name jira \
 ~~~~
 
 >  Start the Jira and link it to the postgresql instance.
-
-# Demo Database Setup
-
-> Note: It's not recommended to use a default initialized database for Jira in production! The default databases are all using a not recommended collation! Please use this for demo purposes only!
-
-This is a demo "by foot" using the docker cli. In this example we setup an empty PostgreSQL container. Then we connect and configure the Jira accordingly. Afterwards the Jira container can always resume on the database.
-
-Steps:
-
-* Start Database container
-* Start Jira
-
-## PostgreSQL
-
-Let's take an PostgreSQL Docker Image and set it up:
-
-Postgres Official Docker Image:
-
-~~~~
-$ docker network create jiranet
-$ docker run --name postgres -d \
-    --network jiranet \
-    -e 'POSTGRES_DB=jiradb' \
-    -e 'POSTGRES_USER=jiradb' \
-    -e 'POSTGRES_PASSWORD=jellyfish' \
-    postgres:9.4
-~~~~
-
-> This is the official postgres image.
-
-Postgres Community Docker Image:
-
-~~~~
-$ docker run --name postgres -d \
-    --network jiranet \
-    -e 'DB_USER=jiradb' \
-    -e 'DB_PASS=jellyfish' \
-    -e 'DB_NAME=jiradb' \
-    sameersbn/postgresql:9.4-12
-~~~~
-
-> This is the sameersbn/postgresql docker container I tested.
-
-Now start the Jira container and let it use the container. On first startup you have to configure your Jira yourself and fill it with a test license. Afterwards every time you connect to a database the Jira configuration will be skipped.
-
-~~~~
-$ docker run -d --name jira \
-    --network jiranet \
-    -v jiravolume:/var/atlassian/jira \
-	  -e "JIRA_DATABASE_URL=postgresql://jiradb@postgres/jiradb" \
-	  -e "JIRA_DB_PASSWORD=jellyfish" \
-	  -p 80:8080 eugenmayer/jira
-~~~~
-
->  Start the Jira and link it to the postgresql instance.
-
-## MySQL
-
-Let's take an MySQL container and set it up:
-
-MySQL Official Docker Image:
-
-~~~~
-$ docker network create jiranet
-$ docker run -d --name mysql \
-    --network jiranet \
-    -e 'MYSQL_ROOT_PASSWORD=verybigsecretrootpassword' \
-    -e 'MYSQL_DATABASE=jiradb' \
-    -e 'MYSQL_USER=jiradb' \
-    -e 'MYSQL_PASSWORD=jellyfish' \
-    mysql:5.6
-~~~~
-
-> This is the mysql docker container I tested.
-
-MySQL Community Docker Image:
-
-~~~~
-$ docker run -d --name mysql \
-    --network jiranet \
-    -e 'ON_CREATE_DB=jiradb' \
-    -e 'MYSQL_USER=jiradb' \
-    -e 'MYSQL_PASS=jellyfish' \
-    tutum/mysql:5.6
-~~~~
-
-> This is the tutum/mysql docker container I tested.
-
-Now start the Jira container and let it use the container. On first startup you have to configure your Jira yourself and fill it with a test license. Afterwards every time you connect to a database the Jira configuration will be skipped.
-
-~~~~
-$ docker run -d --name jira \
-    --network jiranet \
-    -v jiravolume:/var/atlassian/jira \
-    -e "JIRA_DATABASE_URL=mysql://jiradb@mysql/jiradb" \
-    -e "JIRA_DB_PASSWORD=jellyfish"  \
-    -p 80:8080 \
-    eugenmayer/jira
-~~~~
-
->  Start the Jira and link it to the mysql instance.
 
 # Database Wait Feature
 
@@ -238,8 +163,8 @@ Example waiting for a postgresql database:
 First start Jira:
 
 ~~~~
-$ docker network create jiranet
-$ docker run --name jira \
+docker network create jiranet
+docker run --name jira \
     --network jiranet \
     -v jiravolume:/var/atlassian/jira \
     -e "DOCKER_WAIT_HOST=postgres" \
@@ -254,7 +179,7 @@ $ docker run --name jira \
 Start the database within 60 seconds:
 
 ~~~~
-$ docker run --name postgres -d \
+docker run --name postgres -d \
     --network jiranet \
     -v postgresvolume:/var/lib/postgresql \
     -e 'POSTGRES_USER=jira' \
@@ -266,103 +191,18 @@ $ docker run --name postgres -d \
     blacklabelops/postgres
 ~~~~
 
-> Jira will start after postgres is available!
+# Build The Image
 
-# Proxy Configuration
+```
+docker-compose build jira
+```
 
-You can specify your proxy host and proxy port with the environment variables JIRA_PROXY_NAME and JIRA_PROXY_PORT. The value will be set inside the Atlassian server.xml at startup!
 
-When you use https then you also have to include the environment variable JIRA_PROXY_SCHEME.
+If you want to build a specific release, just replace the version in .env and again run
 
-Example HTTPS:
-
-* Proxy Name: myhost.example.com
-* Proxy Port: 443
-* Poxy Protocol Scheme: https
-
-Just type:
-
-~~~~
-$ docker run -d --name jira \
-    -v jiravolume:/var/atlassian/jira \
-    -e "JIRA_PROXY_NAME=myhost.example.com" \
-    -e "JIRA_PROXY_PORT=443" \
-    -e "JIRA_PROXY_SCHEME=https" \
-    eugenmayer/jira
-~~~~
-
-> Will set the values inside the server.xml in /opt/jira/conf/server.xml
-
-# NGINX HTTP Proxy
-
-This is an example on running Atlassian Jira behind NGINX with 2 Docker commands!
-
-First start Jira:
-
-~~~~
-$ docker network create jiranet
-$ docker run -d --name jira \
-    --network jiranet \
-    -v jiravolume:/var/atlassian/jira \
-    -e "JIRA_PROXY_NAME=192.168.99.100" \
-    -e "JIRA_PROXY_PORT=80" \
-    -e "JIRA_PROXY_SCHEME=http" \
-    eugenmayer/jira
-~~~~
-
-> Example with dockertools
-
-Then start NGINX:
-
-~~~~
-$ docker run -d \
-    -p 80:80 \
-    --network jiranet \
-    --name nginx \
-    -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
-    -e "SERVER1REVERSE_PROXY_PASS1=http://jira:8080" \
-    blacklabelops/nginx
-~~~~
-
-> Jira will be available at http://192.168.99.100.
-
-# NGINX HTTPS Proxy
-
-This is an example on running Atlassian Jira behind NGINX-HTTPS with2 Docker commands!
-
-Note: This is a self-signed certificate! Trusted certificates by letsencrypt are supported. Documentation can be found here: [blacklabelops/nginx](https://github.com/blacklabelops/nginx)
-
-First start Jira:
-
-~~~~
-$ docker network create jiranet
-$ docker run -d --name jira \
-    --network jiranet \
-    -v jiravolume:/var/atlassian/jira \
-    -e "JIRA_PROXY_NAME=192.168.99.100" \
-    -e "JIRA_PROXY_PORT=443" \
-    -e "JIRA_PROXY_SCHEME=https" \
-    eugenmayer/jira
-~~~~
-
-> Example with dockertools
-
-Then start NGINX:
-
-~~~~
-$ docker run -d \
-    -p 443:443 \
-    --name nginx \
-    --network jiranet \
-    -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
-    -e "SERVER1REVERSE_PROXY_PASS1=http://jira:8080" \
-    -e "SERVER1CERTIFICATE_DNAME=/CN=CrustyClown/OU=SpringfieldEntertainment/O=crusty.springfield.com/L=Springfield/C=US" \
-    -e "SERVER1HTTPS_ENABLED=true" \
-    -e "SERVER1HTTP_ENABLED=false" \
-    blacklabelops/nginx
-~~~~
-
-> Jira will be available at https://192.168.99.100.
+```
+docker-compose build jirqa
+```
 
 # A Word About Memory Usage
 
@@ -372,7 +212,7 @@ You should give at least 1-2GB more than the JVM maximum memory setting to your 
 Example:
 
 ~~~~
-$ docker run -d -p 80:8080 --name jira \
+docker run -d -p 80:8080 --name jira \
     -v jiravolume:/var/atlassian/jira \
     -e "CATALINA_OPTS= -Xms384m -Xmx1g" \
     eugenmayer/jira
@@ -385,7 +225,7 @@ Alternative solution recommended by atlassian: Using the environment variables `
 Example:
 
 ~~~~
-$ docker run -d -p 80:8080 --name jira \
+docker run -d -p 80:8080 --name jira \
     -v jiravolume:/var/atlassian/jira \
     -e "JVM_MINIMUM_MEMORY=384m" \
     -e "JVM_MAXIMUM_MEMORY=1g" \
@@ -405,7 +245,7 @@ You can use your customized configuration, e.g. Tomcat's `server.xml`. This is n
 Example:
 
 ~~~~
-$ docker run -d --name jira \
+docker run -d --name jira \
     -p 80:8080 \
     -v jiravolume:/var/atlassian/jira \
     -v $(pwd)/server.xml:/opt/jira/conf/server.xml \

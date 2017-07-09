@@ -5,6 +5,8 @@ services:
     image: eugenmayer/jira:${JIRA_VERSION}
     build:
       context: ./
+      args:
+        JIRA_VERSION: ${JIRA_VERSION}
     container_name: jirasoftware
     volumes:
       - jiradata:/var/atlassian/jira
