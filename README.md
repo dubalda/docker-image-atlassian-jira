@@ -1,4 +1,5 @@
 # Dockerized Atlassian Jira
+[Atlassian JIRA Release notes](https://confluence.atlassian.com/jirasoftware/jira-software-release-notes-776821069.html)
 
 [![Docker Stars](https://img.shields.io/docker/stars/eugenmayer/jira.svg)](https://hub.docker.com/r/EugenMayer/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/EugenMayer/jira.svg)](https://hub.docker.com/r/EugenMayer/jira/)
 
