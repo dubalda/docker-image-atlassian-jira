@@ -9,13 +9,13 @@ if [ $# -eq 0 ]
 fi
 
 echo "injection version: $version"
-sed -i ''  "s/JIRA_VERSION=.*/JIRA_VERSION=$version/g" .env
-sed -i ''  "s/ARG JIRA_VERSION=.*/ARG JIRA_VERSION=$version/g" Dockerfile
+sed -i "s/JIRA_VERSION=.*/JIRA_VERSION=$version/g" .env
+sed -i "s/ARG JIRA_VERSION=.*/ARG JIRA_VERSION=$version/g" Dockerfile
 cp Dockerfile Dockerfile_de
 
 echo "preparing german release Dockerfile_de"
-sed -i '' "s/ARG LANG_LANGUAGE=.*/ARG LANG_LANGUAGE=de/g" Dockerfile_de
-sed -i '' "s/ARG LANG_COUNTRY=.*/ARG LANG_COUNTRY=DE/g" Dockerfile_de
+sed -i "s/ARG LANG_LANGUAGE=.*/ARG LANG_LANGUAGE=de/g" Dockerfile_de
+sed -i "s/ARG LANG_COUNTRY=.*/ARG LANG_COUNTRY=DE/g" Dockerfile_de
 
 echo "tagging with $version"
 git add .env
