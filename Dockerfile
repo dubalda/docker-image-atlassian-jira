@@ -1,5 +1,5 @@
 FROM alpine:3.6
-ARG JIRA_VERSION=7.4.4
+ARG JIRA_VERSION=7.5.0
 ARG JIRA_PRODUCT=jira-software
 # Permissions, set the linux user id and group id
 ARG CONTAINER_UID=1000
