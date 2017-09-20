@@ -255,6 +255,13 @@ docker run -d --name jira \
 
 > Note: `server.xml` is located in the directory where the command is executed.
 
+# Run in debug mode
+
+If you want to run JIRA with a debug port, please see `examples/debug` - esentially what we do is
+ - we add the debug port as an env parameter
+ - we overwrite the start-jira.sh script so we do not user `catalina.sh run` as startup bun rater `catalina.sh jpda run` .. that is about anything we changed in there
+ - we expose the port 5005 to the host so we can connect
+
 # Contributions
 
 I am happy to take on pull requests and suggestion, but will try to keep the image as dry as possible. 
