@@ -1,23 +1,17 @@
 # Dockerized Atlassian Jira
-[Atlassian JIRA Release notes](https://confluence.atlassian.com/jirasoftware/jira-software-release-notes-776821069.html)
-
-[![Docker Stars](https://img.shields.io/docker/stars/eugenmayer/jira.svg)](https://hub.docker.com/r/EugenMayer/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/EugenMayer/jira.svg)](https://hub.docker.com/r/EugenMayer/jira/)
-
-"The best software teams ship early and often - Not many tools, one tool. JIRA Software is built for every member of your software team to plan, track, and release great software." - [[Source](https://www.atlassian.com/software/jira)]
+This project is build by concourse.ci, see [our oss pipelines here](https://github.com/EugenMayer/concourse-our-open-pipelines)
+ 
+[![Docker Stars](https://img.shields.io/docker/stars/eugenmayer/jira.svg)](https://hub.docker.com/r/EugenMayer/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/eugenmayer/jira.svg)](https://hub.docker.com/r/eugenmayer/jira/)
 
 ## Supported tags and respective Dockerfile links
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
 | Jira Software - EN | 7.0 - 7.x(latest) | [see tags](https://hub.docker.com/r/eugenmayer/jira/tags/ | [Dockerfile](https://github.com/eugenmayer/jira/blob/master/Dockerfile) |
-| Jira Software - DE | 7.0 - 7.x(latest) | [see tags](https://hub.docker.com/r/eugenmayer/jira/tags/ | [Dockerfile](https://github.com/eugenmayer/jira/blob/master/Dockerfile_de) |
 
-> Older tags remain but are not supported/rebuild.
+> On every release, the oldest and the newest tags are rebuild. 
 
-> `de-` prefix means images are installed with preset language german locale.
-
-
-# Make It Short
+# The short story
 
 Docker-Compose:
 
