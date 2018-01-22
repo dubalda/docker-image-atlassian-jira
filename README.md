@@ -11,7 +11,13 @@ This project is build by concourse.ci, see [our oss pipelines here](https://gith
 
 > On every release, the oldest and the newest tags are rebuild. 
 
-# The short story
+# You may also like
+
+* [confluence](https://github.com/EugenMayer/docker-image-atlassian-confluence)
+* [rancher catalog - corresponding catalog for jira](https://github.com/EugenMayer/docker-rancher-extra-catalogs/tree/master/templates/jira)
+* [development - running this image for development including a debugger](https://github.com/EugenMayer/docker-image-atlassian-jira/tree/master/examples/debug)
+
+# Make it short
 
 Docker-Compose:
 
@@ -30,7 +36,9 @@ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira eugenmaye
 
 > Jira will be available at http://yourdockerhost. Data will be persisted inside docker volume `jiravolume`.
 
-# Setup
+# The long story
+
+## Setup
 
 1. Start database server.
 1. Start Jira.
