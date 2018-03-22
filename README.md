@@ -14,6 +14,7 @@ This project is build by concourse.ci, see [our oss pipelines here](https://gith
 # You may also like
 
 * [confluence](https://github.com/EugenMayer/docker-image-atlassian-confluence)
+* [bitbucket](https://github.com/EugenMayer/docker-image-atlassian-bitbucket)
 * [rancher catalog - corresponding catalog for jira](https://github.com/EugenMayer/docker-rancher-extra-catalogs/tree/master/templates/jira)
 * [development - running this image for development including a debugger](https://github.com/EugenMayer/docker-image-atlassian-jira/tree/master/examples/debug)
 
