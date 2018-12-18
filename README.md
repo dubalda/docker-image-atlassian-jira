@@ -7,7 +7,7 @@ This project is build by concourse.ci, see [our oss pipelines here](https://gith
 
 | Product |Version | Tags  | Dockerfile |
 |---------|--------|-------|------------|
-| Jira Software - EN | 7.0 - 7.x(latest) | [see tags](https://hub.docker.com/r/eugenmayer/jira/tags/) | [Dockerfile](https://github.com/eugenmayer/jira/blob/master/Dockerfile) |
+| Jira Software - EN | 7.0 - 8.x(latest) | [see tags](https://hub.docker.com/r/eugenmayer/jira/tags/) | [Dockerfile](https://github.com/eugenmayer/jira/blob/master/Dockerfile) |
 
 > On every release, the oldest and the newest tags are rebuild. 
 
