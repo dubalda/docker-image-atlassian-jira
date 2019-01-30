@@ -1,5 +1,5 @@
 FROM alpine:3.6
-ARG JIRA_VERSION=7.6.2
+ARG JIRA_VERSION=8.0.0-BETA
 ARG JIRA_PRODUCT=jira-software
 # Permissions, set the linux user id and group id
 ARG CONTAINER_UID=1000
@@ -16,7 +16,8 @@ ENV JIRA_USER=jira \
     JIRA_SCRIPTS=/usr/local/share/atlassian \
     MYSQL_DRIVER_VERSION=5.1.42 \
     DOCKERIZE_VERSION=v0.5.0 \
-    POSTGRESQL_DRIVER_VERSION=9.4.1212
+    POSTGRESQL_DRIVER_VERSION=9.4.1212 \
+    DOWNLOAD_URL=https://www.atlassian.com/software/jira/downloads/binary/atlassian-${JIRA_PRODUCT}-${JIRA_VERSION}.bin
 
 # needs to be seperated since we need to use JIRA_INSTALL and it would not be popuplated if merged in one ENV
 ENV JAVA_HOME="$JIRA_INSTALL/jre"
@@ -26,6 +27,7 @@ ENV PATH=$PATH:$JAVA_HOME/bin \
 
 COPY bin ${JIRA_SCRIPTS}
 
+# basic layout
 RUN apk add --update                                    \
       ca-certificates                                   \
       bash												\
@@ -47,16 +49,16 @@ RUN apk add --update                                    \
     apk --allow-untrusted add /tmp/glibc-i18n-${GLIBC_VERSION}.apk && \
     /usr/glibc-compat/bin/localedef -i ${LANG_LANGUAGE}_${LANG_COUNTRY} -f UTF-8 ${LANG_LANGUAGE}_${LANG_COUNTRY}.UTF-8 && \
     # Install Jira
-    export JIRA_BIN=atlassian-${JIRA_PRODUCT}-${JIRA_VERSION}-x64.bin && \
     mkdir -p ${JIRA_HOME}                           &&  \
-    mkdir -p ${JIRA_INSTALL}                        &&  \
-    wget -O /tmp/jira.bin https://downloads.atlassian.com/software/jira/downloads/${JIRA_BIN} && \
+    mkdir -p ${JIRA_INSTALL}
+
+# install jira
+RUN wget -O /tmp/jira.bin ${DOWNLOAD_URL}           &&  \
     chmod +x /tmp/jira.bin                          &&  \
-    /tmp/jira.bin -q -varfile                           \
-      ${JIRA_SCRIPTS}/response.varfile              &&  \
-    # Install database drivers
-    rm -f                                               \
-      ${JIRA_INSTALL}/lib/mysql-connector-java*.jar &&  \
+    /tmp/jira.bin -q -varfile ${JIRA_SCRIPTS}/response.varfile
+
+# Install database drivers
+RUN  rm -f ${JIRA_INSTALL}/lib/mysql-connector-java*.jar &&  \
     wget -O /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz                                              \
       http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz      &&  \
     tar xzf /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz                                              \
