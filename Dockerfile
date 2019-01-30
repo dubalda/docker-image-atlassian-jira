@@ -17,7 +17,7 @@ ENV JIRA_USER=jira \
     MYSQL_DRIVER_VERSION=5.1.42 \
     DOCKERIZE_VERSION=v0.5.0 \
     POSTGRESQL_DRIVER_VERSION=9.4.1212 \
-    DOWNLOAD_URL=https://www.atlassian.com/software/jira/downloads/binary/atlassian-${JIRA_PRODUCT}-${JIRA_VERSION}.bin
+    DOWNLOAD_URL=https://www.atlassian.com/software/jira/downloads/binary/atlassian-${JIRA_PRODUCT}-${JIRA_VERSION}-x64.bin
 
 # needs to be seperated since we need to use JIRA_INSTALL and it would not be popuplated if merged in one ENV
 ENV JAVA_HOME="$JIRA_INSTALL/jre"
