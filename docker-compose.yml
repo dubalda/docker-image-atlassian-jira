@@ -21,9 +21,6 @@ services:
       - 'JIRA_PROXY_SCHEME='
       - 'DOCKER_WAIT_HOST=postgresql'
       - 'DOCKER_WAIT_PORT=5432'
-    labels:
-      com.blacklabelops.description: "Atlassian Jira"
-      com.blacklabelops.service: "jira"
 
   postgresql:
     image: blacklabelops/postgres
@@ -38,9 +35,6 @@ services:
       - 'POSTGRES_ENCODING=UNICODE'
       - 'POSTGRES_COLLATE=C'
       - 'POSTGRES_COLLATE_TYPE=C'
-    labels:
-      com.blacklabelops.description: "PostgreSQL Database Server"
-      com.blacklabelops.service: "postgresql"
 
 volumes:
   jiradata:
