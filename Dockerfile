@@ -39,6 +39,8 @@ RUN apk add --update                                    \
       xmlstarlet                                    &&  \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
     curl https://raw.githubusercontent.com/vishnubob/wait-for-it/55c54a5abdfb32637b563b28cc088314b162195e/wait-for-it.sh -o /usr/bin/wait-for-it && \
+    # needed for the jira installer, see https://community.atlassian.com/t5/Confluence-questions/Unable-to-run-installer/qaq-p/1062805
+    apk add ttf-dejavu && \
     # Install latest glibc
     export GLIBC_VERSION=2.25-r0 && \
     wget --directory-prefix=/tmp https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk && \
