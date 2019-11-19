@@ -45,21 +45,20 @@ RUN apt-get update \
     && mkdir -p ${JIRA_HOME} \
     && mkdir -p ${JIRA_INSTALL} \
     # Add user
-    && export CONTAINER_USER=jira \
-    && export CONTAINER_UID=1000 \
     && export CONTAINER_GROUP=jira \
-    && export CONTAINER_GID=1000 \
-    && addgroup --gid $CONTAINER_GID $CONTAINER_GROUP \
-    && adduser --uid $CONTAINER_UID \
-            --gid $CONTAINER_GID \
-            --home /home/$CONTAINER_USER \
-            --shell /bin/bash \
-            $CONTAINER_USER
+    && addgroup --gid $CONTAINER_GID $CONTAINER_GROUP
 
 # install jira
 RUN wget -O /tmp/jira.bin ${DOWNLOAD_URL} \
     && chmod +x /tmp/jira.bin \
     && /tmp/jira.bin -q -varfile ${JIRA_SCRIPTS}/response.varfile
+    # must come after the install, which creates the group itself
+RUN export CONTAINER_USER=jira \
+    && adduser --uid $CONTAINER_UID \
+            --gid $CONTAINER_GID \
+            --home /home/$CONTAINER_USER \
+            --shell /bin/bash \
+            $CONTAINER_USER
 
 # Install database drivers
 RUN  rm -f ${JIRA_INSTALL}/lib/mysql-connector-java*.jar \
@@ -103,5 +102,5 @@ USER jira
 WORKDIR ${JIRA_HOME}
 VOLUME ["/var/atlassian/jira"]
 EXPOSE 8080
-ENTRYPOINT ["/sbin/tini","--","/usr/local/share/atlassian/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/tini","--","/usr/local/share/atlassian/docker-entrypoint.sh"]
 CMD ["jira"]

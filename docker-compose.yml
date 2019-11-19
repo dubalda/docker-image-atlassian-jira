@@ -23,7 +23,7 @@ services:
       - 'DOCKER_WAIT_PORT=5432'
 
   postgresql:
-    image: blacklabelops/postgres
+    image: postgres:9.6
     hostname: postgresql
     volumes:
       - postgresqldata:/var/lib/postgresql/data
