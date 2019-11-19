@@ -1,8 +1,8 @@
 # Docker image of Atlassian Jira
 
-Production ready, up to date builds of Atlassian Jira - right from the original binary download based on adoptjdk openjdk 11
+Production ready, up to date builds of Atlassian Jira - right from the original binary download based on adoptjdk-openjdk11
 
-This project is build by concourse.ci, see [our oss pipelines here](https://github.com/EugenMayer/concourse-our-open-pipelines)
+ - It should be compatible with Mysql 5.3+ and Postgresql 9.3+
  
 [![Docker Stars](https://img.shields.io/docker/stars/eugenmayer/jira.svg)](https://hub.docker.com/r/eugenmayer/jira/) [![Docker Pulls](https://img.shields.io/docker/pulls/eugenmayer/jira.svg)](https://hub.docker.com/r/eugenmayer/jira/)
 

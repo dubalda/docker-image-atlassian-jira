@@ -14,6 +14,7 @@ services:
       - '80:8080'
     environment:
       - 'JIRA_DATABASE_URL=postgresql://jira@postgresql/jiradb'
+      #- 'JIRA_DATABASE_URL=mysql://jira@mysql/jiradb'
       - 'JIRA_DB_PASSWORD=jellyfish'
       - 'CATALINA_OPTS= -Xms256m -Xmx1g'
       - 'JIRA_PROXY_NAME='
@@ -21,23 +22,38 @@ services:
       - 'JIRA_PROXY_SCHEME='
       - 'DOCKER_WAIT_HOST=postgresql'
       - 'DOCKER_WAIT_PORT=5432'
+      #- 'DOCKER_WAIT_HOST=mysql'
+      #- 'DOCKER_WAIT_PORT=3306'
 
   postgresql:
-    image: postgres:9.6
+    image: postgres:10
     hostname: postgresql
     volumes:
       - postgresqldata:/var/lib/postgresql/data
     environment:
       - 'POSTGRES_USER=jira'
-      # CHANGE THE PASSWORD!
       - 'POSTGRES_PASSWORD=jellyfish'
       - 'POSTGRES_DB=jiradb'
       - 'POSTGRES_ENCODING=UNICODE'
       - 'POSTGRES_COLLATE=C'
       - 'POSTGRES_COLLATE_TYPE=C'
 
+# uncomment this to run against mysql
+#  mysql:
+#    image: mysql:5.7
+#    hostname: mysql
+#    volumes:
+#      - mysqldata:/var/lib/mysql
+#    environment:
+#      - 'MYSQL_ROOT_PASSWORD=verybigsecretrootpassword'
+#      - 'MYSQL_DATABASE=jiradb'
+#      - 'MYSQL_USER=jira'
+#      - 'MYSQL_PASSWORD=jellyfish'
+
 volumes:
   jiradata:
     external: false
   postgresqldata:
+    external: false
+  mysqldata:
     external: false
