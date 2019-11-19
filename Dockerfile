@@ -29,15 +29,15 @@ ENV PATH=$PATH:$JAVA_HOME/bin \
 COPY bin ${JIRA_SCRIPTS}
 
 # basic layout
-RUN apt-get update                                    \
-    && apt-get install -y  \
-      ca-certificates                                   \
-      bash												\
-      gzip                                              \
-      curl                                              \
-      tini                                              \
-      wget                                              \
-      xmlstarlet                                   \
+RUN apt-get update \
+    && apt-get install -y \
+      ca-certificates \
+      bash \
+      gzip \
+      curl \
+      tini \
+      wget \
+      xmlstarlet \
       ttf-dejavu \
     && echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf \
     && curl https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh -o /usr/bin/wait-for-it \
@@ -57,23 +57,23 @@ RUN apt-get update                                    \
             $CONTAINER_USER
 
 # install jira
-RUN wget -O /tmp/jira.bin ${DOWNLOAD_URL}             \
-    && chmod +x /tmp/jira.bin                            \
+RUN wget -O /tmp/jira.bin ${DOWNLOAD_URL} \
+    && chmod +x /tmp/jira.bin \
     && /tmp/jira.bin -q -varfile ${JIRA_SCRIPTS}/response.varfile
 
 # Install database drivers
-RUN  rm -f ${JIRA_INSTALL}/lib/mysql-connector-java*.jar   \
-    && wget -O /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz                                              \
-      http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz        \
-    && tar xzf /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz                                              \
-      --directory=/tmp                                                                                          \
-    && cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar     \
-      ${JIRA_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar                                  \
-    && rm -f ${JIRA_INSTALL}/lib/postgresql-*.jar                                                                  \
-    && wget -O ${JIRA_INSTALL}/lib/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar                                       \
+RUN  rm -f ${JIRA_INSTALL}/lib/mysql-connector-java*.jar \
+    && wget -O /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz \
+      http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz \
+    && tar xzf /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz \
+      --directory=/tmp \
+    && cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar \
+      ${JIRA_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar \
+    && rm -f ${JIRA_INSTALL}/lib/postgresql-*.jar \
+    && wget -O ${JIRA_INSTALL}/lib/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar \
       https://jdbc.postgresql.org/download/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar
 
-# Adding letsencrypt-ca to truststore # &&  \
+# Adding letsencrypt-ca to truststore # && \
 # Install atlassian ssl tool, which is mainly need to be able to create application links with other atlassian tools, which run LE SSL certificates
 RUN wget -O /home/${JIRA_USER}/SSLPoke.class https://confluence.atlassian.com/kb/files/779355358/779355357/1/1441897666313/SSLPoke.class \
     # Set permissions
