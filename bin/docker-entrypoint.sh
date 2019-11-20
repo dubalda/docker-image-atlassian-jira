@@ -73,8 +73,12 @@ TARGET_PROPERTY=4host-manager.org.apache.juli.AsyncFileHandler.directory
 sed -i "/${TARGET_PROPERTY}/d" ${JIRA_INSTALL}/conf/logging.properties
 echo "${TARGET_PROPERTY} = ${jira_logfile}" >> ${JIRA_INSTALL}/conf/logging.properties
 
+
+waitForDB
+
+/usr/local/bin/custom_scripts.sh
+
 if [ "$1" = 'jira' ] || [ "${1:0:1}" = '-' ]; then
-  waitForDB
   /bin/bash ${JIRA_SCRIPTS}/launch.sh
   exec ${JIRA_INSTALL}/bin/start-jira.sh -fg "$@"
 else

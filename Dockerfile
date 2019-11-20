@@ -26,7 +26,9 @@ ENV JAVA_HOME="$JIRA_INSTALL/jre"
 ENV PATH=$PATH:$JAVA_HOME/bin \
  LANG=${LANG_LANGUAGE}_${LANG_COUNTRY}.UTF-8
 
-COPY bin ${JIRA_SCRIPTS}
+COPY bin_atlassian ${JIRA_SCRIPTS}
+COPY bin/custom_scripts.sh /usr/local/bin/custom_scripts.sh
+COPY bin/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 # basic layout
 RUN apt-get update \
@@ -44,6 +46,7 @@ RUN apt-get update \
     # Install Jira
     && mkdir -p ${JIRA_HOME} \
     && mkdir -p ${JIRA_INSTALL} \
+    && mkdir -p /docker-entrypoint.d \
     # Add user
     && export CONTAINER_GROUP=jira \
     && addgroup --gid $CONTAINER_GID $CONTAINER_GROUP
@@ -52,7 +55,8 @@ RUN apt-get update \
 RUN wget -O /tmp/jira.bin ${DOWNLOAD_URL} \
     && chmod +x /tmp/jira.bin \
     && /tmp/jira.bin -q -varfile ${JIRA_SCRIPTS}/response.varfile
-    # must come after the install, which creates the group itself
+
+# must come after the install, which creates the group itself
 RUN export CONTAINER_USER=jira \
     && adduser --uid $CONTAINER_UID \
             --gid $CONTAINER_GID \
@@ -62,15 +66,11 @@ RUN export CONTAINER_USER=jira \
 
 # Install database drivers
 RUN  rm -f ${JIRA_INSTALL}/lib/mysql-connector-java*.jar \
-    && wget -O /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz \
-      http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz \
-    && tar xzf /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz \
-      --directory=/tmp \
-    && cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar \
-      ${JIRA_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar \
+    && wget -O /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz \
+    && tar xzf /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}.tar.gz --directory=/tmp \
+    && cp /tmp/mysql-connector-java-${MYSQL_DRIVER_VERSION}/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar ${JIRA_INSTALL}/lib/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar \
     && rm -f ${JIRA_INSTALL}/lib/postgresql-*.jar \
-    && wget -O ${JIRA_INSTALL}/lib/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar \
-      https://jdbc.postgresql.org/download/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar
+    && wget -O ${JIRA_INSTALL}/lib/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar https://jdbc.postgresql.org/download/postgresql-${POSTGRESQL_DRIVER_VERSION}.jar
 
 # Adding letsencrypt-ca to truststore # && \
 # Install atlassian ssl tool, which is mainly need to be able to create application links with other atlassian tools, which run LE SSL certificates
@@ -102,5 +102,5 @@ USER jira
 WORKDIR ${JIRA_HOME}
 VOLUME ["/var/atlassian/jira"]
 EXPOSE 8080
-ENTRYPOINT ["/usr/bin/tini","--","/usr/local/share/atlassian/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/tini","--","/usr/local/bin/docker-entrypoint.sh"]
 CMD ["jira"]
