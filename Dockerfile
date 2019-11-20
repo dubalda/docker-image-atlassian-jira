@@ -83,6 +83,7 @@ RUN wget -O /home/${JIRA_USER}/SSLPoke.class https://confluence.atlassian.com/kb
     # Install dockerize
     && wget -O /tmp/dockerize.tar.gz https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf /tmp/dockerize.tar.gz \
+    && chmod +x /usr/local/bin/* \
     && rm /tmp/dockerize.tar.gz \
     # Clean caches and tmps
     && apt-get -y autoremove \
