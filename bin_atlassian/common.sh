@@ -75,7 +75,7 @@ extract_database_url() {
       local jdbc_driver="com.mysql.jdbc.Driver"
       local jdbc_url="jdbc:mysql://$host_port_name?autoReconnect=true&characterEncoding=utf8&useUnicode=true&sessionVariables=default_storage_engine%3DInnoDB"
       local hibernate_dialect="org.hibernate.dialect.MySQLDialect"
-      local database_type="mysql"
+      local database_type="mysql57"
       ;;
     *)
       echo "Unsupported database url scheme: $(read_var $prefix SCHEME)"

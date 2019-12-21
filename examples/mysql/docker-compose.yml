@@ -9,7 +9,7 @@ jira:
   links:
     - 'mysql:mysql'
 mysql:
-  image: mysql:5.6
+  image: mysql:5.7
   environment:
     - 'MYSQL_ROOT_PASSWORD=verybigsecretrootpassword'
     - 'MYSQL_DATABASE=jiradb'
