@@ -16,7 +16,6 @@ xmlstarlet ed -P -S -L -u '//Context/@path' -v "$CONTEXT_PATH" ${JIRA_INSTALL}/c
 
 if [ -n "$JIRA_DATABASE_URL" ]; then
   extract_database_url "$JIRA_DATABASE_URL" JIRA_DB ${JIRA_INSTALL}/lib
-  JIRA_DB_JDBC_URL="$(xmlstarlet esc "$JIRA_DB_JDBC_URL")"
   SCHEMA=''
   if [ "$JIRA_DB_TYPE" != "mysql57" ]; then
     SCHEMA='<schema-name>public</schema-name>'

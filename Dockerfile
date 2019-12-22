@@ -1,6 +1,6 @@
 FROM adoptopenjdk/openjdk11:debian
 
-ARG JIRA_VERSION=8.5.1
+ARG JIRA_VERSION=8.6.0
 ARG JIRA_PRODUCT=jira-software
 # Permissions, set the linux user id and group id
 ARG CONTAINER_UID=1000
