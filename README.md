@@ -44,6 +44,8 @@ docker run -d -p 80:8080 -v jiravolume:/var/atlassian/jira --name jira eugenmaye
 
 See the `docker-compose.yml` file
 
+Notes for Mysql: if you run mysql5.7+ be sure to set `JIRA_MYSQL_DB_VERSION=mysql57` in the ENV vars of the jira container
+
 # Build the image
 
 You can build the image yourself. You might want to adjust the desired jira version in `.env`

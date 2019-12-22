@@ -15,6 +15,10 @@ services:
     environment:
       - 'JIRA_DATABASE_URL=postgresql://jira@postgresql/jiradb'
       #- 'JIRA_DATABASE_URL=mysql://jira@mysql/jiradb'
+      # for mysql up to 5.6
+      #- 'JIRA_MYSQL_DB_VERSION=mysql
+      # for mysql from 5.7+=
+      #- 'JIRA_MYSQL_DB_VERSION=mysql57
       - 'JIRA_DB_PASSWORD=jellyfish'
       - 'CATALINA_OPTS= -Xms256m -Xmx1g'
       - 'JIRA_PROXY_NAME='

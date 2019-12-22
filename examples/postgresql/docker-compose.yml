@@ -1,16 +1,17 @@
-jira:
-  image: eugenmayer/jira
-  container_name: jira
-  ports:
-    - '80:8080'
-  environment:
-    - 'JIRA_DATABASE_URL=postgresql://jiradb@postgresql/jiradb'
-    - 'JIRA_DB_PASSWORD=jellyfish'
-  links:
-    - postgresql
-postgresql:
-  image: postgres:10
-  environment:
-    - 'POSTGRES_USER=jiradb'
-    - 'POSTGRES_PASSWORD=jellyfish'
-    - 'POSTGRES_DB=jiradb'
+version: "3"
+
+services:
+  jira:
+    image: eugenmayer/jira
+    container_name: jira
+    ports:
+      - '80:8080'
+    environment:
+      - 'JIRA_DATABASE_URL=postgresql://jiradb@db/jiradb'
+      - 'JIRA_DB_PASSWORD=jellyfish'
+  db:
+    image: postgres:10
+    environment:
+      - 'POSTGRES_USER=jiradb'
+      - 'POSTGRES_PASSWORD=jellyfish'
+      - 'POSTGRES_DB=jiradb'
