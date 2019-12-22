@@ -74,7 +74,7 @@ extract_database_url() {
       local host_port_name="$(read_var $prefix HOST):$(read_var $prefix PORT)/$(read_var $prefix NAME)"
       #local jdbc_driver="com.mysql.cj.jdbc.Driver"
       local jdbc_driver="com.mysql.jdbc.Driver"
-      local jdbc_url="jdbc:mysql://address=(protocol=tcp)(host=$(read_var $prefix HOST))(port=$(read_var $prefix PORT))/$(read_var $prefix NAME)?autoReconnect=true&characterEncoding=UTF8&useUnicode=true&sessionVariables=default_storage_engine=InnoDB"
+      local jdbc_url="jdbc:mysql://$host_port_name?autoReconnect=true&characterEncoding=UTF8&useUnicode=true&sessionVariables=default_storage_engine=InnoDB"
       local hibernate_dialect="org.hibernate.dialect.MySQLDialect"
       local database_type="mysql57"
       ;;
